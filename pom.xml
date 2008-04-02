@@ -147,6 +147,11 @@
       <artifactId>commons-math</artifactId>
       <version>1.1</version>
     </dependency>
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>1.1.1</version>
+    </dependency>
   </dependencies>
   <reporting>
     <plugins>

@@ -216,7 +216,7 @@ public class PublishToServerCommand {
             }
             if (overwrite) {
               try {
-                  String message = publish(publishURL + "/SchemaPublisher", user, userPassword, publishPassword, "", schemaExplorer.getSchemaFile(), jndiName, enableXmla);
+                  String message = publish(publishURL + "/MondrianCatalogPublisher", user, userPassword, publishPassword, publishPath, schemaExplorer.getSchemaFile(), jndiName, enableXmla);
                   JOptionPane.showMessageDialog(
                       workbench, 
                       message.trim(), 
@@ -266,6 +266,8 @@ public class PublishToServerCommand {
       fullURL += "&overwrite=true"; //$NON-NLS-1$
       fullURL += "&jndiName=" + jndiName;
       fullURL += "&enableXmla=" + enableXmla;
+      
+      LOG.fine("PUBLISH URL PATH : " + fullURL);
       
       PostMethod filePost = new PostMethod(fullURL);
       ArrayList<Part> parts = new ArrayList<Part>();
