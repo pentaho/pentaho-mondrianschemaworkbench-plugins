@@ -175,7 +175,7 @@ public class PublishToServerCommand {
 
       try {
 
-        String schemaName = schemaExplorer.getSchema().getName();
+        String schemaName = schemaExplorer.getSchema().name;
         String fileName = schemaExplorer.getSchemaFile().getName(); 
 
         String publishPath = workbench.getWorkbenchProperty(PUBLISH_LOCATION);
