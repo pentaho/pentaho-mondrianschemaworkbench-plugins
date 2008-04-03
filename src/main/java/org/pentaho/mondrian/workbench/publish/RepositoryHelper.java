@@ -69,17 +69,25 @@ public class RepositoryHelper {
       }
     }
     PostMethod filePost = new PostMethod(baseURL + "/SolutionRepositoryService?component=getSolutionRepositoryDoc&filter=" + URLEncoder.encode(filter, "UTF-8"));
-    int status = client.executeMethod(filePost);
-    if (status == HttpStatus.SC_UNAUTHORIZED) {
-      throw new Exception("User authentication failed.");
-    } else if (status == HttpStatus.SC_NOT_FOUND) {
-      throw new Exception("Repository service not found on server.");
-    } else if (status != HttpStatus.SC_OK) {
-      throw new Exception("Server error: HTTP status code " + status);
-    } else {
-      InputStream postResult = filePost.getResponseBodyAsStream();
-      SAXReader reader = new SAXReader();
-      return reader.read(postResult);
+    try {
+        int status = client.executeMethod(filePost);
+        if (status == HttpStatus.SC_UNAUTHORIZED) {
+          throw new Exception("User authentication failed.");
+        } else if (status == HttpStatus.SC_NOT_FOUND) {
+          throw new Exception("Repository service not found on server.");
+        } else if (status != HttpStatus.SC_OK) {
+          throw new Exception("Server error: HTTP status code " + status);
+        } else {
+          InputStream postResult = filePost.getResponseBodyAsStream();
+          SAXReader reader = new SAXReader();
+          return reader.read(postResult);
+        }
+    } finally {
+        try {
+            filePost.releaseConnection();
+        } catch (Exception e) {
+            // ignore
+        }
     }
   }
 

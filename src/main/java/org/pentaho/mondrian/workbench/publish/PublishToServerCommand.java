@@ -189,9 +189,8 @@ public class PublishToServerCommand {
         }
         boolean enableXmla = "true".equals(workbench.getWorkbenchProperty(PUBLISH_ENABLE_XMLA));
 
-
         boolean okPressed = true;
-        while (okPressed) {
+        while (okPressed) {            
           PublishToRepositoryDialog repositoryBrowserDialog = 
               new PublishToRepositoryDialog(workbench, false, publishURL, publishPath, user, userPassword, null, schemaName, fileName, jndiName, enableXmla);
           WindowUtils.setLocationRelativeTo(repositoryBrowserDialog, workbench);
