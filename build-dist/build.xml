@@ -1,0 +1,33 @@
+<!-- 
+
+this ant script builds the pentaho workbench distribution
+based on mondrian workbench 3.0.2.  Note that you must first
+build the plugin jar, which you can do by running mvn package
+at the project root.
+
+-->
+<project default="dist" name="pentaho-workbench">
+	
+	<property file="override.properties" />	
+    <property file="build.properties"/>	
+	<target name="dist">
+		
+		<!-- init -->
+		<delete dir="${build.dir}"/>
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${dist.dir}"/>		
+
+		<!-- unzip original dist -->
+		<unzip src="${workbench-dist-zip}" dest="${build.dir}"/>
+		
+		<!-- copy over plugin -->
+		<copy file="${plugin.jar}" todir="${build.dir}/${workbench-dist}/plugins"/>
+			
+		<!-- zip new dist -->
+		<zip basedir="${build.dir}" file="${dist.dir}/${pentaho-workbench-dist-zip}"/>
+		
+		<!-- clean up -->
+		<delete dir="${build.dir}"/>
+		
+	</target>
+</project>
