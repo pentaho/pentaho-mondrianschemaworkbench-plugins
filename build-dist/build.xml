@@ -22,7 +22,14 @@ at the project root.
 		
 		<!-- copy over plugin -->
 		<copy file="${plugin.jar}" todir="${build.dir}/${workbench-dist}/plugins"/>
-			
+
+                <!-- copy over plugin dependencies -->
+                <copy file="${user.home}/.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3.jar" todir="${build.dir}/${workbench-dist}/plugins"/>
+		<copy file="${user.home}/.m2/repository/commons-codec/commons-codec/1.2/commons-codec-1.2.jar" todir="${build.dir}/${workbench-dist}/plugins"/>
+                <copy file="${user.home}/.m2/repository/commons-httpclient/commons-httpclient/3.0.1/commons-httpclient-3.0.1.jar" todir="${build.dir}/${workbench-dist}/plugins"/>
+                <copy file="${user.home}/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" todir="${build.dir}/${workbench-dist}/plugins"/>
+                <copy file="${user.home}/.m2/repository/jaxen/jaxen/1.1.1/jaxen-1.1.1.jar" todir="${build.dir}/${workbench-dist}/plugins"/>
+
 		<!-- zip new dist -->
 		<zip basedir="${build.dir}" file="${dist.dir}/${pentaho-workbench-dist-zip}"/>
 		
