@@ -47,7 +47,7 @@ public class SolutionRepositoryTree extends JTree {
     this.serverUserId = serverUserId;
     this.serverPassword = serverPassword;
     setModel(new DefaultTreeModel(repositoryHelper.getRootNode()));
-    solutionRepositoryDocument = RepositoryHelper.getRepositoryDocument(baseURL, filters, serverUserId, serverPassword);
+    solutionRepositoryDocument = repositoryHelper.getRepositoryDocument(baseURL, filters, serverUserId, serverPassword);
     repositoryHelper.buildRepositoryTree(solutionRepositoryDocument, filters, showFoldersOnly);
 
     DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer() {
@@ -120,7 +120,7 @@ public class SolutionRepositoryTree extends JTree {
 
   public void refresh(boolean fetchDocument) throws Exception {
     if (fetchDocument) {
-      solutionRepositoryDocument = RepositoryHelper.getRepositoryDocument(baseURL, filters, serverUserId, serverPassword);
+      solutionRepositoryDocument = repositoryHelper.getRepositoryDocument(baseURL, filters, serverUserId, serverPassword);
     }
     repositoryHelper.buildRepositoryTree(solutionRepositoryDocument, clientFilters, showFoldersOnly);
     setModel(new DefaultTreeModel(repositoryHelper.getRootNode()));

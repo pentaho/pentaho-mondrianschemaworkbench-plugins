@@ -24,6 +24,7 @@ import javax.swing.tree.TreeNode;
 
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
@@ -34,7 +35,6 @@ import org.dom4j.io.SAXReader;
 
 public class RepositoryHelper {
   private static SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-  private static HttpClient client = new HttpClient();
   private HashMap<DefaultMutableTreeNode, Boolean> nodeTypeMap = new HashMap<DefaultMutableTreeNode, Boolean>();
   private HashMap<DefaultMutableTreeNode, Date> nodeDateMap = new HashMap<DefaultMutableTreeNode, Date>();
   private DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Solution Repository");
@@ -44,6 +44,7 @@ public class RepositoryHelper {
   }
 
   public void createNewFolder(String baseURL, String path, String name, String description) throws Exception {
+    HttpClient client = new HttpClient();
     PostMethod filePost = new PostMethod(baseURL + "/SolutionRepositoryService?component=createNewFolder&path=" + URLEncoder.encode(path, "UTF-8") + "&name=" + URLEncoder.encode(name, "UTF-8") + "&desc="
         + URLEncoder.encode(description, "UTF-8"));
     int status = client.executeMethod(filePost);
@@ -51,10 +52,23 @@ public class RepositoryHelper {
       throw new Exception("Server error: HTTP status code " + status);
     }
   }
+  
+  HttpMethod currentRequest;
+  
+  public void abortCurrentHttpRequest() {
+      try {
+          if (currentRequest != null) {
+              currentRequest.abort();
+          }
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+  }
 
-  public static Document getRepositoryDocument(String baseURL, String filters[], String serverUserId, String serverPassword) throws Exception {
+  public Document getRepositoryDocument(String baseURL, String filters[], String serverUserId, String serverPassword) throws Exception {
     // If server userid/password was supplied, use basic authentication to
     // authenticate with the server.
+    HttpClient client = new HttpClient();
     client.getParams().setSoTimeout(30000);
     if (serverUserId.length() > 0 && serverPassword.length() > 0) {
       Credentials creds = new UsernamePasswordCredentials(serverUserId, new String(serverPassword));
@@ -68,9 +82,9 @@ public class RepositoryHelper {
         filter += ",";
       }
     }
-    PostMethod filePost = new PostMethod(baseURL + "/SolutionRepositoryService?component=getSolutionRepositoryDoc&filter=" + URLEncoder.encode(filter, "UTF-8"));
+    currentRequest = new PostMethod(baseURL + "/SolutionRepositoryService?component=getSolutionRepositoryDoc&filter=" + URLEncoder.encode(filter, "UTF-8"));
     try {
-        int status = client.executeMethod(filePost);
+        int status = client.executeMethod(currentRequest);
         if (status == HttpStatus.SC_UNAUTHORIZED) {
           throw new Exception("User authentication failed.");
         } else if (status == HttpStatus.SC_NOT_FOUND) {
@@ -78,16 +92,17 @@ public class RepositoryHelper {
         } else if (status != HttpStatus.SC_OK) {
           throw new Exception("Server error: HTTP status code " + status);
         } else {
-          InputStream postResult = filePost.getResponseBodyAsStream();
+          InputStream postResult = currentRequest.getResponseBodyAsStream();
           SAXReader reader = new SAXReader();
           return reader.read(postResult);
         }
     } finally {
         try {
-            filePost.releaseConnection();
+            currentRequest.releaseConnection();
         } catch (Exception e) {
             // ignore
         }
+        currentRequest = null;
     }
   }
 

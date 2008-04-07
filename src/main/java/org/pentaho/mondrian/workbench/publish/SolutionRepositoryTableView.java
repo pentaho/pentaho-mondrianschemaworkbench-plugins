@@ -79,14 +79,14 @@ public class SolutionRepositoryTableView extends JScrollPane {
     }
   }
 
-  public SolutionRepositoryTableView(boolean showFoldersOnly, String baseURL, String[] filters, String serverUserId, String serverPassword, final SolutionRepositorySelectionCallback callback) throws Exception {
+  public SolutionRepositoryTableView(Document solutionRepositoryDocument, boolean showFoldersOnly, String baseURL, String[] filters, String serverUserId, String serverPassword, final SolutionRepositorySelectionCallback callback) throws Exception {
     this.showFoldersOnly = showFoldersOnly;
     this.filters = filters;
     this.baseURL = baseURL;
     this.serverUserId = serverUserId;
     this.serverPassword = serverPassword;
     this.callback = callback;
-    solutionRepositoryDocument = RepositoryHelper.getRepositoryDocument(baseURL, filters, serverUserId, serverPassword);
+    this.solutionRepositoryDocument = solutionRepositoryDocument;
     repositoryHelper.buildRepositoryTree(solutionRepositoryDocument, clientFilters, showFoldersOnly);
 
     final DefaultTreeCellRenderer treeRenderer = new DefaultTreeCellRenderer();
@@ -212,7 +212,7 @@ public class SolutionRepositoryTableView extends JScrollPane {
 
   public void refresh(boolean fetchRepositoryDocument) throws Exception {
     if (fetchRepositoryDocument) {
-      solutionRepositoryDocument = RepositoryHelper.getRepositoryDocument(baseURL, filters, serverUserId, serverPassword);
+      solutionRepositoryDocument = repositoryHelper.getRepositoryDocument(baseURL, filters, serverUserId, serverPassword);
     }
     repositoryHelper.buildRepositoryTree(solutionRepositoryDocument, clientFilters, showFoldersOnly);
     repositoryTable.setModel(new MyTableModel());
