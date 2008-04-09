@@ -124,7 +124,11 @@ public class RepositoryHelper {
       Element child = childFolders.get(i);
       DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child.attributeValue("name"));
       nodeTypeMap.put(childNode, Boolean.TRUE);
-      nodeDateMap.put(childNode, new Date(Long.parseLong(child.attributeValue("lastModifiedDate"))));
+      try {
+          nodeDateMap.put(childNode, new Date(Long.parseLong(child.attributeValue("lastModifiedDate"))));
+      } catch (Exception e) {
+          // ignore for backwards compatibility with 1.7
+      }
       parentNode.add(childNode);
       buildRepository(childNode, childFolders.get(i), filters, showFoldersOnly);
     }
@@ -135,7 +139,11 @@ public class RepositoryHelper {
         if (acceptFilter(child.attributeValue("name"), filters)) {
           DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child.attributeValue("name"));
           nodeTypeMap.put(childNode, Boolean.FALSE);
-          nodeDateMap.put(childNode, new Date(Long.parseLong(child.attributeValue("lastModifiedDate"))));
+          try {
+              nodeDateMap.put(childNode, new Date(Long.parseLong(child.attributeValue("lastModifiedDate"))));
+          } catch (Exception e) {
+      	    // ignore for backwards compatibility with 1.7          
+          }
           parentNode.add(childNode);
         }
       }
@@ -143,7 +151,7 @@ public class RepositoryHelper {
   }
 
   public void buildRepositoryTree(Document solutionRepositoryDocument, String filters[], boolean showFoldersOnly) {
-    Element repository = (Element) solutionRepositoryDocument.selectSingleNode("/repository");
+    Element repository = (Element) solutionRepositoryDocument.selectSingleNode("//repository");
     rootNode.removeAllChildren();
     nodeTypeMap.clear();
     List<Element> childFolders = repository.selectNodes("file[@isDirectory='true']");
@@ -151,7 +159,11 @@ public class RepositoryHelper {
       Element child = childFolders.get(i);
       DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child.attributeValue("name"));
       nodeTypeMap.put(childNode, Boolean.TRUE);
-      nodeDateMap.put(childNode, new Date(Long.parseLong(child.attributeValue("lastModifiedDate"))));
+      try {
+          nodeDateMap.put(childNode, new Date(Long.parseLong(child.attributeValue("lastModifiedDate"))));
+      } catch (Exception e){
+          // ignore for backwards compatibility with 1.7
+      }
       rootNode.add(childNode);
       buildRepository(childNode, childFolders.get(i), filters, showFoldersOnly);
     }
@@ -162,7 +174,11 @@ public class RepositoryHelper {
         if (acceptFilter(child.attributeValue("name"), filters)) {
           DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child.attributeValue("name"));
           nodeTypeMap.put(childNode, Boolean.FALSE);
-          nodeDateMap.put(childNode, new Date(Long.parseLong(child.attributeValue("lastModifiedDate"))));
+          try {
+              nodeDateMap.put(childNode, new Date(Long.parseLong(child.attributeValue("lastModifiedDate"))));
+          } catch (Exception e) {
+              // ignore for backwards compatibility with 1.7
+          }
           rootNode.add(childNode);
         }
       }
