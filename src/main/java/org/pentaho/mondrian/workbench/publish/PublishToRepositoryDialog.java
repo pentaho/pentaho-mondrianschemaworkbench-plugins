@@ -53,7 +53,7 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
   JTextField fileNameTextField = new JTextField("default");
   JTextField jndiDataSourceName = new JTextField("");  
   JTextField descTextField = new JTextField("");
-  JCheckBox enableXmlaCheckBox = new JCheckBox("Enable XMLA Data Source");
+  JCheckBox enableXmlaCheckBox = new JCheckBox("Register XMLA Data Source");
   JCheckBox forceOutputTypePromptCB = new JCheckBox("Prompt for Report Output Type");
   
   JComboBox locationCombo = new JComboBox();
