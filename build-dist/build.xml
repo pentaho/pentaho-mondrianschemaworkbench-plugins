@@ -32,7 +32,7 @@ at the project root.
 
 		<!-- copy our docs -->
 		<copy todir="${build.dir}/doc">
-        	<fileset dir="doc" includes="**/*"/>
+        	<fileset dir="../doc" includes="**/*"/>
       	</copy>
 
 		<!-- zip new dist -->
