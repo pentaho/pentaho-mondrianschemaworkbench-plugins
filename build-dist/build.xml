@@ -30,6 +30,11 @@ at the project root.
                 <copy file="${user.home}/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar" todir="${build.dir}/${workbench-dist}/plugins"/>
                 <copy file="${user.home}/.m2/repository/jaxen/jaxen/1.1.1/jaxen-1.1.1.jar" todir="${build.dir}/${workbench-dist}/plugins"/>
 
+		<!-- copy our docs -->
+		<copy todir="${build.dir}/doc">
+        	<fileset dir="doc" includes="**/*"/>
+      	</copy>
+
 		<!-- zip new dist -->
 		<zip basedir="${build.dir}" file="${dist.dir}/${pentaho-workbench-dist-zip}"/>
 		

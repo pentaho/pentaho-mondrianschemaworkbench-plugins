@@ -405,6 +405,10 @@ public class PublishToServerCommand {
                   message = Messages.getString("PublishToServerCommand.InvalidUsernameOrPassword");
               } else if (rtn == 1) {
                   message = Messages.getString("PublishToServerCommand.FileExistsOverride");
+              } else if (rtn == 6) {
+                message = Messages.getString("PublishToServerCommand.JNDIDoesNotExist");
+              } else if (rtn == 7) {
+                message = Messages.getString("PublishToServerCommand.XMLACatalogExists");
               }
           } catch (IOException e) {
               throw new PublishException(e);
