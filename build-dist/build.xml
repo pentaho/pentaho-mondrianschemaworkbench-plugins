@@ -31,7 +31,7 @@ at the project root.
                 <copy file="${user.home}/.m2/repository/jaxen/jaxen/1.1.1/jaxen-1.1.1.jar" todir="${build.dir}/${workbench-dist}/plugins"/>
 
 		<!-- copy our docs -->
-		<copy todir="${build.dir}/doc">
+		<copy todir="${build.dir}/${workbench-dist}/doc">
         	<fileset dir="../doc" includes="**/*"/>
       	</copy>
 
