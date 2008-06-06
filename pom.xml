@@ -9,6 +9,15 @@
     <system>JIRA</system>
     <url>http://jira.pentaho.org/</url>
   </issueManagement>
+  	<repositories>
+		<repository>
+			<id>pentaho</id>
+			<url>http://repo.pentaho.com:8088/artifactory/repo/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
   <scm>
     <connection>scm:svn:svn://source.pentaho.org/svnroot/pentaho-mondrianschemaworkbench-plugins</connection>
     <developerConnection>scm:svn:svn://source.pentaho.org/svnroot/pentaho-mondrianschemaworkbench-plugins</developerConnection>
