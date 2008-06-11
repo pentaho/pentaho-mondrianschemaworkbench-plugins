@@ -19,11 +19,16 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
+import java.security.spec.KeySpec;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESedeKeySpec;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -52,9 +57,6 @@ public class PublishToServerCommand {
 
   
   private static final String DEFAULT_SERVER_LOCATION = "http://localhost:8080/pentaho/";
-
-  public PublishToServerCommand() {
-  }
   
   private static final String PUBLISH_WEB_LOCATION = "pentahoPublishWebLocation";
   private static final String PUBLISH_WEB_LOCATIONS = "pentahoPublishWebLocations";
@@ -62,14 +64,56 @@ public class PublishToServerCommand {
   private static final String PUBLISH_USER_IDS = "pentahoPublishUserIds";
   private static final String PUBLISH_PASSWORD = "pentahoPublishPassword";
   private static final String PUBLISH_PASSWORDS = "pentahoPublishPasswords";
-  private static final String PUBLISH_USER_PASSWORD = "pentahoPublishPassword";
-  private static final String PUBLISH_USER_PASSWORDS = "pentahoPublishPasswords";
+  private static final String PUBLISH_USER_PASSWORD = "pentahoUserPassword";
+  private static final String PUBLISH_USER_PASSWORDS = "pentahoUserPasswords";
   private static final String PUBLISH_JNDI_NAME = "pentahoPublishJndiName";
   private static final String PUBLISH_ENABLE_XMLA = "pentahoPublishEnableXmla";
   private static final String PUBLISH_LOCATION = "pentahoPublishLocation";
   
   private static final String DELIMITER = "\t"; 
       
+  private SecretKeyFactory keyFactory;
+  private Cipher cipher;
+  private SecretKey encryptionKey;
+  
+  public PublishToServerCommand() {
+      try {
+          byte[] keyAsBytes = "abcdefghijkPENTAHOlmnopqrstuvw5xyz".getBytes( "UTF8" );
+          KeySpec keySpec = new DESedeKeySpec( keyAsBytes );
+          keyFactory = SecretKeyFactory.getInstance( "DESede");
+          encryptionKey = keyFactory.generateSecret( keySpec );
+          cipher = Cipher.getInstance( "DESede" );
+      } catch (Exception e) {
+          LOG.severe("failed to initialize password encryption");
+          e.printStackTrace();
+      }
+  }
+
+  private String encryptPassword(String password) {
+      try {
+          cipher.init( Cipher.ENCRYPT_MODE, encryptionKey );
+          byte[] cleartext = password.getBytes( "UTF8" );
+          byte[] ciphertext = cipher.doFinal( cleartext );
+          return Base64.encodeBytes(ciphertext);
+      } catch (Exception e) {
+          LOG.severe("failed to encrypt password");
+          e.printStackTrace();
+      }
+      return null;
+  }
+  
+  private String decryptPassword(String encryptedPassword) {
+      try {
+          cipher.init( Cipher.DECRYPT_MODE, encryptionKey );
+          byte[] cleartext = Base64.decode(encryptedPassword);
+          byte[] ciphertext = cipher.doFinal( cleartext );
+          return new String(ciphertext, "UTF8");
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+      return null;
+  }
+  
   private List<String> splitProperties(String value) {
       List<String> list = new ArrayList<String>();
       if (value == null) {
@@ -164,13 +208,13 @@ public class PublishToServerCommand {
     }
     String user = workbench.getWorkbenchProperty(PUBLISH_USER_ID);
             
-    String publishPassword = workbench.getWorkbenchProperty(PUBLISH_PASSWORD);
-    String userPassword = workbench.getWorkbenchProperty(PUBLISH_USER_PASSWORD);
+    String publishPassword = decryptPassword(workbench.getWorkbenchProperty(PUBLISH_PASSWORD));
+    String userPassword = decryptPassword(workbench.getWorkbenchProperty(PUBLISH_USER_PASSWORD));
 
     List<String> publishLocations = splitProperties(workbench.getWorkbenchProperty(PUBLISH_WEB_LOCATIONS));
     List<String> publishUserIds = splitProperties(workbench.getWorkbenchProperty(PUBLISH_USER_IDS));
-    List<String> publishUserPasswords = splitProperties(workbench.getWorkbenchProperty(PUBLISH_USER_PASSWORDS));
-    List<String> publishPasswords = splitProperties(workbench.getWorkbenchProperty(PUBLISH_PASSWORDS));
+    List<String> publishUserPasswords = splitProperties(decryptPassword(workbench.getWorkbenchProperty(PUBLISH_USER_PASSWORDS)));
+    List<String> publishPasswords = splitProperties(decryptPassword(workbench.getWorkbenchProperty(PUBLISH_PASSWORDS)));
 
     final RepositoryLoginDialog loginDialog = new RepositoryLoginDialog(workbench, publishURL, publishLocations, publishUserIds, publishUserPasswords, publishPasswords);
     WindowUtils.setLocationRelativeTo(loginDialog, workbench);
@@ -185,9 +229,12 @@ public class PublishToServerCommand {
 
       if (loginDialog.getRememberSettings()) {
         workbench.setWorkbenchProperty(PUBLISH_WEB_LOCATION, publishURL);
-        workbench.setWorkbenchProperty(PUBLISH_PASSWORD, publishPassword);
+
+       // String encryptedKey = 
+            
+        workbench.setWorkbenchProperty(PUBLISH_PASSWORD, encryptPassword(publishPassword));
         workbench.setWorkbenchProperty(PUBLISH_USER_ID, user);
-        workbench.setWorkbenchProperty(PUBLISH_USER_PASSWORD, userPassword);
+        workbench.setWorkbenchProperty(PUBLISH_USER_PASSWORD, encryptPassword(userPassword));
 
         if (!publishLocations.contains(publishURL)) {
           publishLocations.add(publishURL);
@@ -210,7 +257,7 @@ public class PublishToServerCommand {
         } else {
           publishUserPasswords.add(userPassword);
         }
-        workbench.setWorkbenchProperty(PUBLISH_USER_PASSWORDS, getListAsString(publishUserPasswords));
+        workbench.setWorkbenchProperty(PUBLISH_USER_PASSWORDS, encryptPassword(getListAsString(publishUserPasswords)));
         
         // update publish password
         if (index >= 0 && index < publishPasswords.size()) {
@@ -219,7 +266,7 @@ public class PublishToServerCommand {
         } else {
           publishPasswords.add(publishPassword);
         }
-        workbench.setWorkbenchProperty(PUBLISH_PASSWORDS, getListAsString(publishPasswords));
+        workbench.setWorkbenchProperty(PUBLISH_PASSWORDS, encryptPassword(getListAsString(publishPasswords)));
         workbench.storeWorkbenchProperties();
       }
 
