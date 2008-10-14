@@ -106,8 +106,8 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
     okButton.addActionListener(new ActionListener() {
 
       public void actionPerformed(ActionEvent e) {
-        String path = repositoryBrowser.getSelectedFolder();
-        setPublishLocation(path);
+        Object selection = locationCombo.getSelectedItem();
+        setPublishLocation(selection != null ? selection.toString() : "");
         okPressed = true;
         setVisible(false);
       }
@@ -317,12 +317,12 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
     c.anchor = GridBagConstraints.WEST;
     locationFieldPanel.add(levelUp, c);
 
-    c.gridx = 2;
-    c.gridy = 0;
-    c.fill = GridBagConstraints.NONE;
-    c.weightx = 0.0;
-    c.anchor = GridBagConstraints.EAST;
-    locationFieldPanel.add(newFolder, c);
+    //c.gridx = 2;
+    //c.gridy = 0;
+    //c.fill = GridBagConstraints.NONE;
+    //c.weightx = 0.0;
+    //c.anchor = GridBagConstraints.EAST;
+    //locationFieldPanel.add(newFolder, c);
 
     c.gridx = 3;
     c.gridy = 0;

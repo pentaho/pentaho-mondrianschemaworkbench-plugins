@@ -86,6 +86,8 @@ public class SolutionRepositoryTableView extends JScrollPane {
     this.serverUserId = serverUserId;
     this.serverPassword = serverPassword;
     this.callback = callback;
+    this.selectedPath = "";
+    this.selectedFolder = "";
     this.solutionRepositoryDocument = solutionRepositoryDocument;
     repositoryHelper.buildRepositoryTree(solutionRepositoryDocument, clientFilters, showFoldersOnly);
 
@@ -161,8 +163,12 @@ public class SolutionRepositoryTableView extends JScrollPane {
     if (StringUtils.isEmpty(path)) {
       path = "/";
     }
-    selectedPath = path;
+    if (!repositoryHelper.exists(path)) {
+       // no need to attempt to select the path
+       return;
+    }
     selectedFolder = path;
+    selectedPath = path;
     StringTokenizer st = new StringTokenizer(path, "/");
     DefaultMutableTreeNode node = repositoryHelper.getRootNode();
     List<TreeNode> pathList = new ArrayList<TreeNode>();
