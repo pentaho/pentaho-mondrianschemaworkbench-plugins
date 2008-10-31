@@ -46,15 +46,12 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
 
   private static final long serialVersionUID = -3664835596972368205L;
   
-  private static final String[] EXPORT_TYPES = new String[] { "pdf", "html", "csv", "rtf", "xls" };
   SolutionRepositoryTableView repositoryBrowser = null;
 
-  JComboBox fileFormat = new JComboBox(EXPORT_TYPES);
   JTextField fileNameTextField = new JTextField("default");
   JTextField jndiDataSourceName = new JTextField("");  
   JTextField descTextField = new JTextField("");
-  JCheckBox enableXmlaCheckBox = new JCheckBox("Register XMLA Data Source");
-  JCheckBox forceOutputTypePromptCB = new JCheckBox("Prompt for Report Output Type");
+  JCheckBox enableXmlaCheckBox = new JCheckBox(Messages.getString("PublishToRepositoryDialog.XMLADataSourceLabel")); //$NON-NLS-1$
   
   JComboBox locationCombo = new JComboBox();
   String publishLocation = "";
@@ -75,7 +72,7 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
           String jndiName,
           boolean enableXmla
   ) throws Exception {
-    super(parent, "Publish Schema");
+    super(parent, Messages.getString("PublishToRepositoryDialog.Title")); //$NON-NLS-1$
     this.parent = parent;
     init(repositoryDoc, showFoldersOnly, webPublishURL, publishLocation, userid, password, filters, schemaName, schemaFileName, jndiName, enableXmla);
   }
@@ -102,7 +99,7 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
     repositoryBrowser.setPreferredSize(new Dimension(480, 200));
 
     JPanel buttonPanel = new JPanel(new GridBagLayout());
-    JButton okButton = new JButton("Publish");
+    JButton okButton = new JButton(Messages.getString("PublishToRepositoryDialog.PublishButton")); //$NON-NLS-1$
     okButton.addActionListener(new ActionListener() {
 
       public void actionPerformed(ActionEvent e) {
@@ -113,7 +110,7 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
       }
 
     });
-    JButton cancelButton = new JButton("Cancel");
+    JButton cancelButton = new JButton(Messages.getString("PublishToRepositoryDialog.CancelButton")); //$NON-NLS-1$
     cancelButton.addActionListener(new ActionListener() {
 
       public void actionPerformed(ActionEvent e) {
@@ -212,7 +209,7 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
 
     ImageIcon browseIcon = new ImageIcon(SolutionRepositoryTree.class.getResource("/images/navigate.gif"));
     final JLabel browseButton = new JLabel(browseIcon);
-    browseButton.setToolTipText("Browse Repository...");
+    browseButton.setToolTipText(Messages.getString("PublishToRepositoryDialog.BrowseRepository")); //$NON-NLS-1$
     browseButton.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     browseButton.addMouseListener(new MouseListener() {
 
@@ -260,7 +257,7 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
     c.gridy = 0;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.insets = new Insets(5, 5, 5, 5);
-    publishHeaderPanel.add(new JLabel("Schema Name:"), c);
+    publishHeaderPanel.add(new JLabel(Messages.getString("PublishToRepositoryDialog.SchemaNameLabel")), c); //$NON-NLS-1$
 
     c.gridy = 1;
     c.insets = new Insets(2, 5, 0, 5);
@@ -272,7 +269,7 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
     c.gridy = 2;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.insets = new Insets(5, 5, 5, 5);
-    publishHeaderPanel.add(new JLabel("Schema File:"), c);
+    publishHeaderPanel.add(new JLabel(Messages.getString("PublishToRepositoryDialog.SchemaFileLabel")), c); //$NON-NLS-1$
 
     c.gridy = 3;
     c.insets = new Insets(2, 5, 0, 5);
@@ -284,8 +281,8 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
     c.gridy = 4;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.insets = new Insets(2, 5, 0, 5);
-    publishHeaderPanel.add(new JLabel("Location:"), c);
-
+    publishHeaderPanel.add(new JLabel(Messages.getString("PublishToRepositoryDialog.LocationLabel")), c); //$NON-NLS-1$
+ 
     JPanel locationFieldPanel = new JPanel();
     locationFieldPanel.setLayout(new GridBagLayout());
     c.insets = new Insets(0, 5, 2, 0);
@@ -364,7 +361,7 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
 
     // publish settings panel
     JPanel publishSettingsPanel = new JPanel(new GridBagLayout());
-    publishSettingsPanel.setBorder(BorderFactory.createTitledBorder("Publish Settings"));
+    publishSettingsPanel.setBorder(BorderFactory.createTitledBorder(Messages.getString("PublishToRepositoryDialog.PublishSettingsTitle"))); //$NON-NLS-1$
 
     c.insets = new Insets(5, 5, 0, 5);
     c.gridwidth = 2;
@@ -372,7 +369,7 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
     c.gridy = 0;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.anchor = GridBagConstraints.WEST;
-    publishSettingsPanel.add(new JLabel("JNDI Data Source:"), c);
+    publishSettingsPanel.add(new JLabel(Messages.getString("PublishToRepositoryDialog.DatasourceLabel")), c); //$NON-NLS-1$
 
     c.insets = new Insets(5, 5, 5, 0);
     c.gridwidth = 1;

@@ -84,6 +84,10 @@ public class PublishToServerCommand {
   }
 
   private String encryptPassword(String password) {
+			if (password == null ||
+					password.trim().length() == 0) {
+					return password;
+			}
       try {
           cipher.init( Cipher.ENCRYPT_MODE, encryptionKey );
           byte[] cleartext = password.getBytes( "UTF8" );
@@ -97,6 +101,10 @@ public class PublishToServerCommand {
   }
   
   private String decryptPassword(String encryptedPassword) {
+  		if (encryptedPassword == null ||
+  				encryptedPassword.trim().length() == 0) {
+  			return encryptedPassword;
+  		}
       try {
           cipher.init( Cipher.DECRYPT_MODE, encryptionKey );
           byte[] cleartext = Base64.decode(encryptedPassword);
@@ -434,7 +442,7 @@ public class PublishToServerCommand {
               } else if (rtn == 1) {
                   message = Messages.getString("PublishToServerCommand.FileExistsOverride");
               } else if (rtn == 6) {
-                message = Messages.getString("PublishToServerCommand.JNDIDoesNotExist");
+                message = Messages.getString("PublishToServerCommand.DataSourceProblem", jndiName);
               } else if (rtn == 7) {
                 message = Messages.getString("PublishToServerCommand.XMLACatalogExists");
               }
