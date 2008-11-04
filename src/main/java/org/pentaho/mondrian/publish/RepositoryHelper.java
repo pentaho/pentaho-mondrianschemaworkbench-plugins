@@ -43,10 +43,23 @@ public class RepositoryHelper {
     return new RepositoryHelper();
   }
 
-  public void createNewFolder(String baseURL, String path, String name, String description) throws Exception {
+  public void createNewFolder(String baseURL, String path, String name, String description, 
+  		String serverUserId, String serverPassword) throws Exception {
     HttpClient client = new HttpClient();
-    PostMethod filePost = new PostMethod(baseURL + "/SolutionRepositoryService?component=createNewFolder&path=" + URLEncoder.encode(path, "UTF-8") + "&name=" + URLEncoder.encode(name, "UTF-8") + "&desc="
-        + URLEncoder.encode(description, "UTF-8"));
+    client.getParams().setSoTimeout(30000);
+    if (serverUserId.length() > 0 && serverPassword.length() > 0) {
+      Credentials creds = new UsernamePasswordCredentials(serverUserId, new String(serverPassword));
+      client.getState().setCredentials(AuthScope.ANY, creds);
+      client.getParams().setAuthenticationPreemptive(true);
+    }
+    String fullURL = baseURL;
+    if (!fullURL.endsWith("/")) {
+    	fullURL += "/";
+    }
+  	fullURL += "SolutionRepositoryService?component=createNewFolder&path=" + URLEncoder.encode(path, "UTF-8") 
+  							+ "&name=" + URLEncoder.encode(name, "UTF-8") + "&desc="
+  						  + URLEncoder.encode(description, "UTF-8");
+    PostMethod filePost = new PostMethod(fullURL);
     int status = client.executeMethod(filePost);
     if (status != HttpStatus.SC_OK) {
       throw new Exception("Server error: HTTP status code " + status);

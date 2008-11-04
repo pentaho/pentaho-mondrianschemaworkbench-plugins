@@ -59,7 +59,8 @@ public class SolutionRepositoryTreeDialog extends JDialog {
     init(showFoldersOnly, webPublishURL, publishLocation, userid, password, filters);
   }
 
-  public void init(boolean showFoldersOnly, final String webPublishURL, String publishLocation, String userid, String password, String[] filters) throws Exception {
+  public void init(boolean showFoldersOnly, final String webPublishURL, String publishLocation, 
+  		final String userid, final String password, String[] filters) throws Exception {
     setModal(true);
     setTitle("Browse");
     this.publishLocation = publishLocation;
@@ -165,7 +166,7 @@ public class SolutionRepositoryTreeDialog extends JDialog {
             try {
               SwingUtilities.getRootPane(SolutionRepositoryTreeDialog.this).getGlassPane().setVisible(true);
               SwingUtilities.getRootPane(SolutionRepositoryTreeDialog.this).getGlassPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
-              repositoryHelper.createNewFolder(webPublishURL, path, newFolderDialog.getName(), newFolderDialog.getDescription());
+              repositoryHelper.createNewFolder(webPublishURL, path, newFolderDialog.getName(), newFolderDialog.getDescription(), userid, password);
               repositoryBrowser.refresh(true);
               repositoryBrowser.setSelectedPath(path + "/" + newFolderDialog.getName());
             } catch (Exception e1) {

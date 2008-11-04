@@ -150,7 +150,7 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
             try {
               SwingUtilities.getRootPane(PublishToRepositoryDialog.this).getGlassPane().setVisible(true);
               SwingUtilities.getRootPane(PublishToRepositoryDialog.this).getGlassPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
-              RepositoryHelper.getInstance().createNewFolder(webPublishURL, path, newFolderDialog.getName(), newFolderDialog.getDescription());
+              RepositoryHelper.getInstance().createNewFolder(webPublishURL, path, newFolderDialog.getName(), newFolderDialog.getDescription(), userid, password);
               repositoryBrowser.refresh(true);
             } catch (Exception e1) {
               e1.printStackTrace();
@@ -314,12 +314,12 @@ public class PublishToRepositoryDialog extends JDialog implements SolutionReposi
     c.anchor = GridBagConstraints.WEST;
     locationFieldPanel.add(levelUp, c);
 
-    //c.gridx = 2;
-    //c.gridy = 0;
-    //c.fill = GridBagConstraints.NONE;
-    //c.weightx = 0.0;
-    //c.anchor = GridBagConstraints.EAST;
-    //locationFieldPanel.add(newFolder, c);
+    c.gridx = 2;
+    c.gridy = 0;
+    c.fill = GridBagConstraints.NONE;
+    c.weightx = 0.0;
+    c.anchor = GridBagConstraints.EAST;
+    locationFieldPanel.add(newFolder, c);
 
     c.gridx = 3;
     c.gridy = 0;
