@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.pentaho.mondrian.schemaworkbench</groupId>
+  <groupId>pentaho</groupId>
   <artifactId>pentaho-mondrianschemaworkbench-plugins</artifactId>
   <name>pentaho-mondrianschemaworkbench-plugins</name>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <url>http://maven.apache.org</url>
   <issueManagement>
     <system>JIRA</system>
@@ -12,7 +12,7 @@
   	<repositories>
 		<repository>
 			<id>pentaho</id>
-			<url>http://repo.pentaho.com:8088/artifactory/repo/</url>
+			<url>http://repo.pentaho.com/artifactory/repo/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
