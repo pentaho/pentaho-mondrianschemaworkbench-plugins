@@ -445,6 +445,8 @@ public class PublishToServerCommand {
                 message = Messages.getString("PublishToServerCommand.DataSourceProblem", jndiName);
               } else if (rtn == 7) {
                 message = Messages.getString("PublishToServerCommand.XMLACatalogExists");
+              } else if (rtn == 8) {
+                  message = Messages.getString("PublishToServerCommand.XMLASchemaExists");
               }
           } catch (IOException e) {
               throw new PublishException(e);
