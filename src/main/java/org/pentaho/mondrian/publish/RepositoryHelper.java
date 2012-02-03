@@ -51,6 +51,7 @@ public class RepositoryHelper {
       Credentials creds = new UsernamePasswordCredentials(serverUserId, new String(serverPassword));
       client.getState().setCredentials(AuthScope.ANY, creds);
       client.getParams().setAuthenticationPreemptive(true);
+      client.getParams().setCredentialCharset("UTF-8");
     }
     String fullURL = baseURL;
     if (!fullURL.endsWith("/")) {
@@ -87,6 +88,7 @@ public class RepositoryHelper {
       Credentials creds = new UsernamePasswordCredentials(serverUserId, new String(serverPassword));
       client.getState().setCredentials(AuthScope.ANY, creds);
       client.getParams().setAuthenticationPreemptive(true);
+      client.getParams().setCredentialCharset("UTF-8");
     }
     String filter = "";
     for (int i = 0; filters != null && i < filters.length; i++) {

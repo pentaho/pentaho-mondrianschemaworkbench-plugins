@@ -413,6 +413,7 @@ public class PublishToServerCommand {
           Credentials creds = new UsernamePasswordCredentials(serverUserId, serverPassword);
           client.getState().setCredentials(AuthScope.ANY, creds);
           client.getParams().setAuthenticationPreemptive(true);
+          client.getParams().setCredentialCharset("UTF-8");
       }
       int status;
       try {
