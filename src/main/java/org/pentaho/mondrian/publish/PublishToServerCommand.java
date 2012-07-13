@@ -278,13 +278,13 @@ public class PublishToServerCommand {
       InputStream inputStream = new FileInputStream(schemaFile);
 
       FormDataMultiPart part = new FormDataMultiPart()
-              .field("schemaFile", inputStream, MediaType.MULTIPART_FORM_DATA_TYPE)
-              .field("datasourceName", jndiName, MediaType.MULTIPART_FORM_DATA_TYPE)
+              .field("uploadAnalysis", inputStream, MediaType.MULTIPART_FORM_DATA_TYPE)
+              .field("parameters", "Datasource=" + jndiName, MediaType.MULTIPART_FORM_DATA_TYPE)
               .field("overwrite", overwrite ? "true" : "false", MediaType.MULTIPART_FORM_DATA_TYPE)
               .field("xmlaEnabledFlag", enableXmla ? "true" : "false", MediaType.MULTIPART_FORM_DATA_TYPE);
 
       // If the import service needs the file name do the following.
-      part.getField("schemaFile").setContentDisposition(FormDataContentDisposition.name("schemaFile").fileName(schemaFile.getName()).build());
+      part.getField("uploadAnalysis").setContentDisposition(FormDataContentDisposition.name("uploadAnalysis").fileName(schemaFile.getName()).build());
 
       // Credentials here
       Client client = Client.create();
