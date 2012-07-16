@@ -208,10 +208,10 @@ public class PublishToServerCommand {
 
           String message = "";
           int statusCode = publish(publisherUrl, user, userPassword, jndiName, enableXmla, false, parent.getSchemaFile());
-          if (statusCode == 3) {
-            message = Messages.getString("PublishToServerCommand.Successful");
-          } else if (statusCode == 2) {
+          if ((statusCode == 1) || (statusCode == 2)) {
             message = Messages.getString("PublishToServerCommand.Failed");
+          } else if (statusCode == 3) {
+            message = Messages.getString("PublishToServerCommand.Successful");
           } else if (statusCode == 4) {
             message = Messages.getString("PublishToServerCommand.InvalidPassword");
           } else if (statusCode == 5) {
@@ -222,8 +222,6 @@ public class PublishToServerCommand {
             message = Messages.getString("PublishToServerCommand.XMLACatalogExists");
           } else if (statusCode == 8) {
             message = Messages.getString("PublishToServerCommand.XMLASchemaExists");
-          } else if (statusCode == 1) {
-            message = Messages.getString("PublishToServerCommand.Failed");
 
             // Based on the response, if failure was due to an overwrite, prompt user and reissue service call forcing an overwrite
             OverwriteSchemaDialog overwriteDialog = new OverwriteSchemaDialog(parent.getFrame(), parent.getSchemaFile().getName());
@@ -236,6 +234,8 @@ public class PublishToServerCommand {
                 message = Messages.getString("PublishToServerCommand.Successful");
               }
             }
+          } else {
+            message = Messages.getString("PublishToServerCommand.Failed");
           }
 
           if (message.length() > 0) {
@@ -277,11 +277,20 @@ public class PublishToServerCommand {
     try {
       InputStream inputStream = new FileInputStream(schemaFile);
 
+      // TODO - verify that WS is parsing catalogName and stripping
+      // TODO - off the file extension.  If so, we don't need to parse
+      // TODO - catalog name and pass it in.
+      String catalogName = schemaFile.getName();
+      if (catalogName.lastIndexOf('.') != -1) {
+        catalogName = catalogName.substring(0, catalogName.lastIndexOf('.'));
+      }
+
       FormDataMultiPart part = new FormDataMultiPart()
               .field("uploadAnalysis", inputStream, MediaType.MULTIPART_FORM_DATA_TYPE)
               .field("parameters", "Datasource=" + jndiName, MediaType.MULTIPART_FORM_DATA_TYPE)
               .field("overwrite", overwrite ? "true" : "false", MediaType.MULTIPART_FORM_DATA_TYPE)
-              .field("xmlaEnabledFlag", enableXmla ? "true" : "false", MediaType.MULTIPART_FORM_DATA_TYPE);
+              .field("xmlaEnabledFlag", enableXmla ? "true" : "false", MediaType.MULTIPART_FORM_DATA_TYPE)
+              .field("catalogName", catalogName, MediaType.MULTIPART_FORM_DATA_TYPE);
 
       // If the import service needs the file name do the following.
       part.getField("uploadAnalysis").setContentDisposition(FormDataContentDisposition.name("uploadAnalysis").fileName(schemaFile.getName()).build());
