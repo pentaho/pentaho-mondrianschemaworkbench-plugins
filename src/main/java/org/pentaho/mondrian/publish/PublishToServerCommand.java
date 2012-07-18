@@ -54,7 +54,7 @@ public class PublishToServerCommand {
   private static final String PUBLISH_ENABLE_XMLA = "pentahoPublishEnableXmla";
 
   private static final String DELIMITER = "\t";
-  private static final String MONDRIAN_SCHEMA_IMPORT_URL = "plugin/data-access/api/mondrian/importSchema";
+  private static final String MONDRIAN_SCHEMA_IMPORT_URL = "plugin/data-access/api/mondrian/putSchema";
 
   private SecretKeyFactory keyFactory;
   private Cipher cipher;
@@ -287,10 +287,11 @@ public class PublishToServerCommand {
 
       FormDataMultiPart part = new FormDataMultiPart()
               .field("uploadAnalysis", inputStream, MediaType.MULTIPART_FORM_DATA_TYPE)
-              .field("parameters", "Datasource=" + jndiName, MediaType.MULTIPART_FORM_DATA_TYPE)
+              .field("catalogName", catalogName, MediaType.MULTIPART_FORM_DATA_TYPE)
+              .field("Datasource", jndiName, MediaType.MULTIPART_FORM_DATA_TYPE)              
               .field("overwrite", overwrite ? "true" : "false", MediaType.MULTIPART_FORM_DATA_TYPE)
               .field("xmlaEnabledFlag", enableXmla ? "true" : "false", MediaType.MULTIPART_FORM_DATA_TYPE)
-              .field("catalogName", catalogName, MediaType.MULTIPART_FORM_DATA_TYPE);
+             .field("parameters", "Datasource=" + jndiName, MediaType.MULTIPART_FORM_DATA_TYPE);
 
       // If the import service needs the file name do the following.
       part.getField("uploadAnalysis").setContentDisposition(FormDataContentDisposition.name("uploadAnalysis").fileName(schemaFile.getName()).build());
