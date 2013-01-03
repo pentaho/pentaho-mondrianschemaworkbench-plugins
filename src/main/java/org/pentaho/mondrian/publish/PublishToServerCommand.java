@@ -26,6 +26,8 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.swing.JOptionPane;
 import javax.ws.rs.core.MediaType;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -35,6 +37,9 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataMultiPart;
 
 import org.apache.commons.lang.StringUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * User: Martin Date: 25.01.2006 Time: 11:26:24
@@ -277,13 +282,8 @@ public class PublishToServerCommand {
     try {
       InputStream inputStream = new FileInputStream(schemaFile);
 
-      // TODO - verify that WS is parsing catalogName and stripping
-      // TODO - off the file extension.  If so, we don't need to parse
-      // TODO - catalog name and pass it in.
-      String catalogName = schemaFile.getName();
-      if (catalogName.lastIndexOf('.') != -1) {
-        catalogName = catalogName.substring(0, catalogName.lastIndexOf('.'));
-      }
+      // Try to get schema name from xml, otherwise use filename
+      String catalogName = determineDomainCatalogName(new FileInputStream(schemaFile), schemaFile.getName());
 
       FormDataMultiPart part = new FormDataMultiPart()
               .field("uploadAnalysis", inputStream, MediaType.MULTIPART_FORM_DATA_TYPE)
@@ -310,4 +310,34 @@ public class PublishToServerCommand {
       throw new PublishException("Unable to publish Mondrian Schema");
     }
   }
+
+  /**
+   * helper method to calculate the domain id from the file name, or pass catalog
+   * @param dataInputStream schema file input stream
+   * @param fileName name of schema file on filesystem
+   * @return Look up name from XML otherwise use file name
+   */
+  private String determineDomainCatalogName(InputStream dataInputStream, String fileName) {
+    String domainId  = "";
+    final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+    try {
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      Document document = builder.parse(dataInputStream);
+      NodeList schemas = document.getElementsByTagName("Schema");
+      Node schema = schemas.item(0);
+      Node name = schema.getAttributes().getNamedItem("name");
+      domainId = name.getTextContent();
+      dataInputStream.reset();
+    } catch (Exception e) {
+      LOG.fine("Problem occurred when trying to get schema name from document. Using filename instead.");
+    }
+
+    if("".equals(domainId)){
+      domainId = fileName;
+    }
+
+    return domainId;
+  }
+
 }
