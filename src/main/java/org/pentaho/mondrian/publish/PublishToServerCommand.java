@@ -156,8 +156,8 @@ public class PublishToServerCommand {
     List<String> publishUserPasswords = splitProperties(decryptPassword(parent.getProperty(PUBLISH_USER_PASSWORDS)));
 
     final RepositoryLoginDialog loginDialog = new RepositoryLoginDialog(parent.getFrame(), publishURL, publishLocations,
-                                                                        publishUserIds, publishUserPasswords, jndiName, enableXmla);
-    WindowUtils.setLocationRelativeTo(loginDialog, parent.getFrame());
+                                                                         publishUserIds, publishUserPasswords, jndiName, enableXmla);
+    loginDialog.setLocationRelativeTo(parent.getFrame());
     loginDialog.setVisible(true);
 
     if (loginDialog.isPublishPressed()) {
@@ -230,7 +230,8 @@ public class PublishToServerCommand {
 
             // Based on the response, if failure was due to an overwrite, prompt user and reissue service call forcing an overwrite
             OverwriteSchemaDialog overwriteDialog = new OverwriteSchemaDialog(parent.getFrame(), parent.getSchemaFile().getName());
-            WindowUtils.setLocationRelativeTo(overwriteDialog, parent.getFrame());
+
+            overwriteDialog.setLocationRelativeTo(parent.getFrame());
             overwriteDialog.setVisible(true);
             boolean overwrite = overwriteDialog.isOkPressed();
             if (overwrite) {
