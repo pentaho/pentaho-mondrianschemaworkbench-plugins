@@ -106,7 +106,13 @@
       <groupId>org.olap4j</groupId>
       <artifactId>olap4j</artifactId>
       <version>1.0.0.445</version>
+    </dependency>    
+    <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+      <version>3.4.4</version>
     </dependency>
+    </dependencies>    
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
