@@ -112,7 +112,6 @@
       <artifactId>icu4j</artifactId>
       <version>3.4.4</version>
     </dependency>
-    </dependencies>    
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
