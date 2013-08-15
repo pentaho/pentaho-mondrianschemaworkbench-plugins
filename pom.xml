@@ -94,12 +94,12 @@
     <dependency>
       <groupId>pentaho</groupId>
       <artifactId>mondrian</artifactId>
-      <version>${project.version}</version>
+      <version>3.6-RC2</version>
     </dependency>
     <dependency>
         <groupId>pentaho</groupId>
         <artifactId>workbench</artifactId>
-        <version>${project.version}</version>
+        <version>3.6-RC2</version>
         <type>jar</type>
     </dependency>    
     <dependency>
