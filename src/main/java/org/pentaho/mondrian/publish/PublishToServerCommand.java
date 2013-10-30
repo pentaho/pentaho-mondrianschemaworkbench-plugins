@@ -223,11 +223,11 @@ public class PublishToServerCommand {
             message = Messages.getString("PublishToServerCommand.InvalidUsernameOrPassword");
           } else if (statusCode == 6) {
             message = Messages.getString("PublishToServerCommand.DataSourceProblem", jndiName);
-          } else if (statusCode == 7) {
+          } else if (statusCode == 7 || statusCode == 8) {
             message = Messages.getString("PublishToServerCommand.XMLACatalogExists");
-          } else if (statusCode == 8) {
-            message = Messages.getString("PublishToServerCommand.XMLASchemaExists");
-
+            if (statusCode == 8) {
+                message = Messages.getString("PublishToServerCommand.XMLASchemaExists");
+            }
             // Based on the response, if failure was due to an overwrite, prompt user and reissue service call forcing an overwrite
             OverwriteSchemaDialog overwriteDialog = new OverwriteSchemaDialog(parent.getFrame(), parent.getSchemaFile().getName());
 
