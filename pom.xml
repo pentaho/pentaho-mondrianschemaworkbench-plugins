@@ -12,18 +12,9 @@
     <system>JIRA</system>
     <url>http://jira.pentaho.org/</url>
   </issueManagement>
-  	<repositories>
-		<repository>
-			<id>pentaho</id>
-			<url>http://repo.pentaho.org/artifactory/repo/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
   <scm>
-    <connection>scm:svn:svn://source.pentaho.org/svnroot/pentaho-mondrianschemaworkbench-plugins</connection>
-    <developerConnection>scm:svn:svn://source.pentaho.org/svnroot/pentaho-mondrianschemaworkbench-plugins</developerConnection>
+    <connection>scm:https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins.git</connection>
+    <developerConnection>scm:https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins.git</developerConnection>
   </scm>
   <organization>
     <name>Pentaho Corporation</name>
@@ -212,7 +203,7 @@
       <uniqueVersion>false</uniqueVersion>
       <id>pentaho</id>
       <name>Pentaho Open Repository</name>
-      <url>http://repository.pentaho.org/artifactory/pentaho</url>
+      <url>http://repository.pentaho.org:8082/artifactory/pentaho</url>
       <layout>default</layout>
     </repository>
   </distributionManagement>
