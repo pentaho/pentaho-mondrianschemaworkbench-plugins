@@ -37,6 +37,7 @@ import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataMultiPart;
 
 import org.apache.commons.lang.StringUtils;
+import org.pentaho.mondrian.publish.workbench.PublishUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -60,6 +61,7 @@ public class PublishToServerCommand {
 
   private static final String DELIMITER = "\t";
   private static final String MONDRIAN_SCHEMA_IMPORT_URL = "plugin/data-access/api/mondrian/putSchema";
+  private static final String RESERVED_CHARS_URL = "api/repo/files/reservedCharacters";
 
   private SecretKeyFactory keyFactory;
   private Cipher cipher;
@@ -206,6 +208,9 @@ public class PublishToServerCommand {
       try {
         try {
           String publisherUrl = publishURL;
+
+          PublishUtil.fetchReservedChars(publishURL, user, userPassword);
+
           if (!publishURL.endsWith("/")) {
             publisherUrl += "/";
           }
@@ -240,6 +245,8 @@ public class PublishToServerCommand {
                 message = Messages.getString("PublishToServerCommand.Successful");
               }
             }
+          } else if (statusCode == 99){
+            message = Messages.getString("PublishToServerCommand.ReservedCharsViolation", PublishUtil.getReservedCharsDisplay());
           } else {
             message = Messages.getString("PublishToServerCommand.Failed");
           }
@@ -285,6 +292,11 @@ public class PublishToServerCommand {
 
       // Try to get schema name from xml, otherwise use filename
       String catalogName = determineDomainCatalogName(new FileInputStream(schemaFile), schemaFile.getName());
+
+      // If the schema name or the schema filename contain reserved characters, do not attempt to publish.
+      if ( ( !PublishUtil.validateName( catalogName ) ) || ( !PublishUtil.validateName( schemaFile.getName() ) ) ){
+        return 99;
+      }
 
       FormDataMultiPart part = new FormDataMultiPart()
               .field("uploadAnalysis", inputStream, MediaType.MULTIPART_FORM_DATA_TYPE)
@@ -340,5 +352,6 @@ public class PublishToServerCommand {
 
     return domainId;
   }
+
 
 }
