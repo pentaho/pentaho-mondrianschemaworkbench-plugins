@@ -229,8 +229,8 @@
           <artifactId>maven-checkstyle-plugin</artifactId>
           <version>2.12.1</version>
           <configuration>
-            <configLocation>http://repository.pentaho.org/artifactory/repo/pentaho-checkstyle/pentaho_mvn_checkStyle/${project.version}/pentaho_mvn_checkStyle-${project.version}.xml</configLocation>            
-            <suppressionsLocation>http://repository.pentaho.org/artifactory/repo/pentaho-checkstyle/suppressions/${project.version}/suppressions-${project.version}.xml</suppressionsLocation>
+            <configLocation>http://repository.pentaho.org/artifactory/repo/pentaho-checkstyle/pentaho_mvn_checkStyle/TRUNK-SNAPSHOT/pentaho_mvn_checkStyle-TRUNK-SNAPSHOT.xml</configLocation>            
+            <suppressionsLocation>http://repository.pentaho.org/artifactory/repo/pentaho-checkstyle/suppressions/TRUNK-SNAPSHOT/suppressions-TRUNK-SNAPSHOT.xml</suppressionsLocation>
             <encoding>UTF-8</encoding>
           </configuration>
       </plugin>        
