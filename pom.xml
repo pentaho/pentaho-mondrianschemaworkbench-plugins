@@ -6,7 +6,7 @@
   <groupId>pentaho</groupId>
   <artifactId>pentaho-mondrianschemaworkbench-plugins</artifactId>
   <name>pentaho-mondrianschemaworkbench-plugins</name>
-  <version>TRUNK-SNAPSHOT</version>
+  <version>3.7-SNAPSHOT</version>
   <url>https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins</url>
   <issueManagement>
     <system>JIRA</system>
