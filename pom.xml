@@ -29,6 +29,9 @@
     <name>Pentaho Corporation</name>
     <url>http://www.pentaho.com/</url>
   </organization>  
+  <properties>
+      <publish.repo.url>http://nexus.pentaho.org/content/repositories/public-snapshot</publish.repo.url>
+  </properties>   
   <build>
     <defaultGoal>package</defaultGoal>
     <plugins>
@@ -212,7 +215,7 @@
       <uniqueVersion>false</uniqueVersion>
       <id>pentaho</id>
       <name>Pentaho Open Repository</name>
-      <url>http://repository.pentaho.org/artifactory/pentaho</url>
+      <url>${publish.repo.url}</url>
       <layout>default</layout>
     </repository>
   </distributionManagement>
