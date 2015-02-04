@@ -6,7 +6,7 @@
   <groupId>pentaho</groupId>
   <artifactId>pentaho-mondrianschemaworkbench-plugins</artifactId>
   <name>pentaho-mondrianschemaworkbench-plugins</name>
-  <version>3.8-SNAPSHOT</version>
+  <version>3.8.1.1-210</version>
   <url>https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins</url>
   <issueManagement>
     <system>JIRA</system>
