@@ -6,7 +6,7 @@
   
   <groupId>pentaho</groupId>
   <artifactId>pentaho-mondrianschemaworkbench-plugins</artifactId>
-  <version>TRUNK-SNAPSHOT</version>
+  <version>3.9.0.4-364</version>
   <packaging>jar</packaging>
   
   <parent>
