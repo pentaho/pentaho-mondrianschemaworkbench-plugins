@@ -27,7 +27,6 @@
     <dependency.commons-lang.commons-lang.version>2.3</dependency.commons-lang.commons-lang.version>
     <dependency.com.sun.jersey.jersey-client.version>1.19.1</dependency.com.sun.jersey.jersey-client.version>
     <dependency.junit.junit.version>4.4</dependency.junit.junit.version>
-    <dependency.commons-httpclient.commons-httpclient.version>3.0.1</dependency.commons-httpclient.commons-httpclient.version>
     <plugin.org.apache.maven.plugin.maven-eclipse-plugin.version>2.7</plugin.org.apache.maven.plugin.maven-eclipse-plugin.version>
     <dependency.com.sun.jersey.contribs.jersey-spring.version>1.19.1</dependency.com.sun.jersey.contribs.jersey-spring.version>
     <dependency.javax.ws.rs.jsr311-api.version>1.1.1</dependency.javax.ws.rs.jsr311-api.version>
@@ -78,12 +77,7 @@
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
       <version>${dependency.commons-lang.commons-lang.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-httpclient</groupId>
-      <artifactId>commons-httpclient</artifactId>
-      <version>${dependency.commons-httpclient.commons-httpclient.version}</version>
-    </dependency>
+    </dependency>    
     <dependency>
       <groupId>dom4j</groupId>
       <artifactId>dom4j</artifactId>
