@@ -9,7 +9,7 @@
   </parent>
   <groupId>pentaho</groupId>
   <artifactId>pentaho-mondrianschemaworkbench-plugins</artifactId>
-  <version>3.12-SNAPSHOT</version>
+  <version>3.12.0.15-363</version>
   <name>pentaho-mondrianschemaworkbench-plugins</name>
   <url>https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins</url>
   <organization>
@@ -24,11 +24,11 @@
   <properties>
     <source.jdk.version>1.6</source.jdk.version>
     <dependency.commons-vfs.commons-vfs.version>1.0</dependency.commons-vfs.commons-vfs.version>
-    <dependency.com.sun.jersey.jersey-client.version>1.11</dependency.com.sun.jersey.jersey-client.version>
     <dependency.commons-lang.commons-lang.version>2.3</dependency.commons-lang.commons-lang.version>
+    <dependency.com.sun.jersey.jersey-client.version>1.11</dependency.com.sun.jersey.jersey-client.version>
     <dependency.junit.junit.version>4.4</dependency.junit.junit.version>
-    <plugin.org.apache.maven.plugin.maven-eclipse-plugin.version>2.7</plugin.org.apache.maven.plugin.maven-eclipse-plugin.version>
     <dependency.commons-httpclient.commons-httpclient.version>3.0.1</dependency.commons-httpclient.commons-httpclient.version>
+    <plugin.org.apache.maven.plugin.maven-eclipse-plugin.version>2.7</plugin.org.apache.maven.plugin.maven-eclipse-plugin.version>
     <dependency.com.sun.jersey.contribs.jersey-spring.version>1.11</dependency.com.sun.jersey.contribs.jersey-spring.version>
     <dependency.sun.jlfgr.version>1.0</dependency.sun.jlfgr.version>
     <dependency.com.sun.jersey.jersey-core.version>1.11</dependency.com.sun.jersey.jersey-core.version>
@@ -43,8 +43,8 @@
     <dependency.jaxen.jaxen.version>1.1.1</dependency.jaxen.jaxen.version>
     <target.jdk.version>1.6</target.jdk.version>
     <dependency.com.sun.jersey.jersey-bundle.version>1.11</dependency.com.sun.jersey.jersey-bundle.version>
-    <dependency.com.ibm.icu.icu4j.version>3.4.4</dependency.com.ibm.icu.icu4j.version>
     <dependency.com.sun.jersey.jersey-json.version>1.11</dependency.com.sun.jersey.jersey-json.version>
+    <dependency.com.ibm.icu.icu4j.version>3.4.4</dependency.com.ibm.icu.icu4j.version>
     <dependency.commons-math.commons-math.version>1.1</dependency.commons-math.commons-math.version>
   </properties>
   <dependencies>
