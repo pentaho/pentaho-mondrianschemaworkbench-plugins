@@ -9,7 +9,7 @@
   </parent>
   <groupId>pentaho</groupId>
   <artifactId>pentaho-mondrianschemaworkbench-plugins</artifactId>
-  <version>3.15-SNAPSHOT</version>
+  <version>8.0-SNAPSHOT</version>
   <name>pentaho-mondrianschemaworkbench-plugins</name>
   <url>https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins</url>
   <organization>
