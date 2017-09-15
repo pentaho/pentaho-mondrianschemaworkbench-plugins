@@ -5,11 +5,11 @@
   <parent>
     <groupId>org.pentaho</groupId>
     <artifactId>pentaho-ce-jar-parent-pom</artifactId>
-    <version>7.1-SNAPSHOT</version>
+    <version>7.1.0.4-66</version>
   </parent>
   <groupId>pentaho</groupId>
   <artifactId>pentaho-mondrianschemaworkbench-plugins</artifactId>
-  <version>3.14-SNAPSHOT</version>
+  <version>3.14.0.4-66</version>
   <name>pentaho-mondrianschemaworkbench-plugins</name>
   <url>https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins</url>
   <organization>
@@ -44,8 +44,8 @@
     <dependency.jaxen.jaxen.version>1.1.1</dependency.jaxen.jaxen.version>
     <target.jdk.version>1.6</target.jdk.version>
     <dependency.com.sun.jersey.jersey-bundle.version>1.19.1</dependency.com.sun.jersey.jersey-bundle.version>
-    <dependency.com.ibm.icu.icu4j.version>3.4.4</dependency.com.ibm.icu.icu4j.version>
     <dependency.com.sun.jersey.jersey-json.version>1.19.1</dependency.com.sun.jersey.jersey-json.version>
+    <dependency.com.ibm.icu.icu4j.version>3.4.4</dependency.com.ibm.icu.icu4j.version>
     <dependency.commons-math.commons-math.version>1.1</dependency.commons-math.commons-math.version>
   </properties>
   <dependencies>
