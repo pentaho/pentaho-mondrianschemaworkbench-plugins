@@ -5,11 +5,11 @@
   <parent>
     <groupId>org.pentaho</groupId>
     <artifactId>pentaho-ce-jar-parent-pom</artifactId>
-    <version>8.1-SNAPSHOT</version>
+    <version>8.1.0-SNAPSHOT</version>
   </parent>
   <groupId>pentaho</groupId>
   <artifactId>pentaho-mondrianschemaworkbench-plugins</artifactId>
-  <version>8.1-SNAPSHOT</version>
+  <version>8.1.0-SNAPSHOT</version>
   <name>pentaho-mondrianschemaworkbench-plugins</name>
   <url>https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins</url>
   <organization>
