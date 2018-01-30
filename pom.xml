@@ -1,177 +1,123 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.pentaho</groupId>
     <artifactId>pentaho-ce-jar-parent-pom</artifactId>
     <version>8.1.0.0-SNAPSHOT</version>
   </parent>
-  <groupId>pentaho</groupId>
-  <artifactId>pentaho-mondrianschemaworkbench-plugins</artifactId>
-  <version>8.1.0.0-SNAPSHOT</version>
-  <name>pentaho-mondrianschemaworkbench-plugins</name>
+
+  <artifactId>mondrian-schemaworkbench-plugins</artifactId>
+
+  <name>Pentaho Mondrian Schema Workbench Plugins</name>
   <url>https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins</url>
+
   <organization>
     <name>Pentaho Corporation</name>
     <url>http://www.pentaho.com/</url>
   </organization>
+
   <scm>
     <connection>scm:https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins.git</connection>
     <developerConnection>scm:https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins.git</developerConnection>
     <url>https://github.com/pentaho/pentaho-mondrianschemaworkbench-plugins</url>
   </scm>
+
   <properties>
     <source.jdk.version>1.6</source.jdk.version>
-    <dependency.commons-vfs.commons-vfs.version>1.0</dependency.commons-vfs.commons-vfs.version>
-    <dependency.commons-lang.commons-lang.version>2.3</dependency.commons-lang.commons-lang.version>
-    <dependency.com.sun.jersey.jersey-client.version>1.19.1</dependency.com.sun.jersey.jersey-client.version>
-    <dependency.junit.junit.version>4.4</dependency.junit.junit.version>
-    <plugin.org.apache.maven.plugin.maven-eclipse-plugin.version>2.7</plugin.org.apache.maven.plugin.maven-eclipse-plugin.version>
-    <dependency.javax.ws.rs.jsr311-api.version>1.1.1</dependency.javax.ws.rs.jsr311-api.version>
-    <dependency.sun.jlfgr.version>1.0</dependency.sun.jlfgr.version>
-    <dependency.com.sun.jersey.jersey-core.version>1.19.1</dependency.com.sun.jersey.jersey-core.version>
-    <dependency.com.sun.jersey.contribs.jersey-multipart.version>1.19.1</dependency.com.sun.jersey.contribs.jersey-multipart.version>
-    <dependency.mysql.mysql-connector-java.version>5.1.21</dependency.mysql.mysql-connector-java.version>
-    <dependency.dom4j.dom4j.version>1.6.1</dependency.dom4j.dom4j.version>
-    <dependency.commons-logging.commons-logging.version>1.1.1</dependency.commons-logging.commons-logging.version>
-    <dependency.com.sun.jersey.contribs.jersey-apache-client.version>1.19.1</dependency.com.sun.jersey.contribs.jersey-apache-client.version>
-    <dependency.commons-dbcp.commons-dbcp.version>1.4</dependency.commons-dbcp.commons-dbcp.version>
-    <dependency.org.olap4j.olap4j.version>1.1.0</dependency.org.olap4j.olap4j.version>
-    <dependency.log4j.log4j.version>1.2.17</dependency.log4j.log4j.version>
-    <dependency.jaxen.jaxen.version>1.1.1</dependency.jaxen.jaxen.version>
     <target.jdk.version>1.6</target.jdk.version>
-    <dependency.com.sun.jersey.jersey-bundle.version>1.19.1</dependency.com.sun.jersey.jersey-bundle.version>
-    <dependency.com.sun.jersey.jersey-json.version>1.19.1</dependency.com.sun.jersey.jersey-json.version>
-    <dependency.com.ibm.icu.icu4j.version>3.4.4</dependency.com.ibm.icu.icu4j.version>
-    <dependency.commons-math.commons-math.version>1.1</dependency.commons-math.commons-math.version>
+    
+    <mondrian.version>${project.version}</mondrian.version>
+    <!-- external -->
+    <commons-lang.version>2.3</commons-lang.version>
+    <jersey-client.version>1.19.1</jersey-client.version>
+    <junit.version>4.4</junit.version>
+    <jsr311-api.version>1.1.1</jsr311-api.version>
+    <jersey-core.version>1.19.1</jersey-core.version>
+    <jersey-multipart.version>1.19.1</jersey-multipart.version>
   </properties>
+  
   <dependencies>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>${dependency.log4j.log4j.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>${dependency.commons-logging.commons-logging.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>mondrian</artifactId>
-      <version>${project.version}</version>
-    </dependency>
     <dependency>
       <groupId>pentaho</groupId>
       <artifactId>workbench</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.olap4j</groupId>
-      <artifactId>olap4j</artifactId>
-      <version>${dependency.org.olap4j.olap4j.version}</version>
+      <version>${mondrian.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-      <version>${dependency.commons-lang.commons-lang.version}</version>
-    </dependency>    
-    <dependency>
-      <groupId>dom4j</groupId>
-      <artifactId>dom4j</artifactId>
-      <version>${dependency.dom4j.dom4j.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>sun</groupId>
-      <artifactId>jlfgr</artifactId>
-      <version>${dependency.sun.jlfgr.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>${dependency.mysql.mysql-connector-java.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-dbcp</groupId>
-      <artifactId>commons-dbcp</artifactId>
-      <version>${dependency.commons-dbcp.commons-dbcp.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-vfs</groupId>
-      <artifactId>commons-vfs</artifactId>
-      <version>${dependency.commons-vfs.commons-vfs.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-math</groupId>
-      <artifactId>commons-math</artifactId>
-      <version>${dependency.commons-math.commons-math.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>jaxen</groupId>
-      <artifactId>jaxen</artifactId>
-      <version>${dependency.jaxen.jaxen.version}</version>
+      <version>${commons-lang.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>javax.ws.rs</groupId>
       <artifactId>jsr311-api</artifactId>
-      <version>${dependency.javax.ws.rs.jsr311-api.version}</version>
+      <version>${jsr311-api.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey.contribs</groupId>
       <artifactId>jersey-multipart</artifactId>
-      <version>${dependency.com.sun.jersey.contribs.jersey-multipart.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey.contribs</groupId>
-      <artifactId>jersey-apache-client</artifactId>
-      <version>${dependency.com.sun.jersey.contribs.jersey-apache-client.version}</version>
+      <version>${jersey-multipart.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-core</artifactId>
-      <version>${dependency.com.sun.jersey.jersey-core.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-json</artifactId>
-      <version>${dependency.com.sun.jersey.jersey-json.version}</version>
+      <version>${jersey-core.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-client</artifactId>
-      <version>${dependency.com.sun.jersey.jersey-client.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-bundle</artifactId>
-      <version>${dependency.com.sun.jersey.jersey-bundle.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.ibm.icu</groupId>
-      <artifactId>icu4j</artifactId>
-      <version>${dependency.com.ibm.icu.icu4j.version}</version>
+      <version>${jersey-client.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${dependency.junit.junit.version}</version>
+      <version>${junit.version}</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
-  <build>
-    <defaultGoal>package</defaultGoal>
-    <plugins>
-      <plugin>
-        <artifactId>maven-eclipse-plugin</artifactId>
-        <version>${plugin.org.apache.maven.plugin.maven-eclipse-plugin.version}</version>
-        <configuration>
-          <downloadSources>true</downloadSources>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-
 
   <repositories>
     <repository>
