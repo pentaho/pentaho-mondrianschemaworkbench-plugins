@@ -29,7 +29,6 @@
     <dependency.junit.junit.version>4.4</dependency.junit.junit.version>
     <dependency.commons-httpclient.commons-httpclient.version>3.0.1</dependency.commons-httpclient.commons-httpclient.version>
     <plugin.org.apache.maven.plugin.maven-eclipse-plugin.version>2.7</plugin.org.apache.maven.plugin.maven-eclipse-plugin.version>
-    <dependency.com.sun.jersey.contribs.jersey-spring.version>1.19.1</dependency.com.sun.jersey.contribs.jersey-spring.version>
     <dependency.javax.ws.rs.jsr311-api.version>1.1.1</dependency.javax.ws.rs.jsr311-api.version>
     <dependency.sun.jlfgr.version>1.0</dependency.sun.jlfgr.version>
     <dependency.com.sun.jersey.jersey-core.version>1.19.1</dependency.com.sun.jersey.jersey-core.version>
@@ -133,11 +132,6 @@
       <groupId>com.sun.jersey.contribs</groupId>
       <artifactId>jersey-apache-client</artifactId>
       <version>${dependency.com.sun.jersey.contribs.jersey-apache-client.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey.contribs</groupId>
-      <artifactId>jersey-spring</artifactId>
-      <version>${dependency.com.sun.jersey.contribs.jersey-spring.version}</version>
     </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>
