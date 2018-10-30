@@ -34,13 +34,11 @@
     <dependency.com.sun.jersey.jersey-core.version>1.19.1</dependency.com.sun.jersey.jersey-core.version>
     <dependency.com.sun.jersey.contribs.jersey-multipart.version>1.19.1</dependency.com.sun.jersey.contribs.jersey-multipart.version>
     <dependency.mysql.mysql-connector-java.version>5.1.21</dependency.mysql.mysql-connector-java.version>
-    <dependency.dom4j.dom4j.version>1.6.1</dependency.dom4j.dom4j.version>
     <dependency.commons-logging.commons-logging.version>1.1.1</dependency.commons-logging.commons-logging.version>
     <dependency.com.sun.jersey.contribs.jersey-apache-client.version>1.19.1</dependency.com.sun.jersey.contribs.jersey-apache-client.version>
     <dependency.commons-dbcp.commons-dbcp.version>1.4</dependency.commons-dbcp.commons-dbcp.version>
     <dependency.org.olap4j.olap4j.version>1.1.0</dependency.org.olap4j.olap4j.version>
     <dependency.log4j.log4j.version>1.2.17</dependency.log4j.log4j.version>
-    <dependency.jaxen.jaxen.version>1.1.1</dependency.jaxen.jaxen.version>
     <target.jdk.version>1.6</target.jdk.version>
     <dependency.com.sun.jersey.jersey-bundle.version>1.19.1</dependency.com.sun.jersey.jersey-bundle.version>
     <dependency.com.ibm.icu.icu4j.version>3.4.4</dependency.com.ibm.icu.icu4j.version>
@@ -84,11 +82,6 @@
       <version>${dependency.commons-httpclient.commons-httpclient.version}</version>
     </dependency>
     <dependency>
-      <groupId>dom4j</groupId>
-      <artifactId>dom4j</artifactId>
-      <version>${dependency.dom4j.dom4j.version}</version>
-    </dependency>
-    <dependency>
       <groupId>sun</groupId>
       <artifactId>jlfgr</artifactId>
       <version>${dependency.sun.jlfgr.version}</version>
@@ -112,11 +105,6 @@
       <groupId>commons-math</groupId>
       <artifactId>commons-math</artifactId>
       <version>${dependency.commons-math.commons-math.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>jaxen</groupId>
-      <artifactId>jaxen</artifactId>
-      <version>${dependency.jaxen.jaxen.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.ws.rs</groupId>
