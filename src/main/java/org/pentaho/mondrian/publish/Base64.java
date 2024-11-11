@@ -1,11 +1,15 @@
-/*
-// This software is subject to the terms of the Common Public License
-// Agreement, available at the following URL:
-// http://www.opensource.org/licenses/cpl.html.
-// Copyright (C) 2008-2008 Julian Hyde and others
-// All Rights Reserved.
-// You must accept the terms of that agreement to use this software.
-*/
+/*! ******************************************************************************
+ *
+ * Pentaho
+ *
+ * Copyright (C) 2024 by Hitachi Vantara, LLC : http://www.pentaho.com
+ *
+ * Use of this software is governed by the Business Source License included
+ * in the LICENSE.TXT file.
+ *
+ * Change Date: 2028-08-13
+ ******************************************************************************/
+
 
 package org.pentaho.mondrian.publish;
 
