@@ -26,8 +26,10 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.swing.JOptionPane;
 import javax.ws.rs.core.MediaType;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -321,6 +323,8 @@ public class PublishToServerCommand {
       return response != null ? response.getStatus() : -1;
     } catch (FileNotFoundException e) {
       throw new PublishException("Unable to publish Mondrian Schema");
+    } catch ( ParserConfigurationException e ) {
+      throw new RuntimeException( e );
     }
   }
 
@@ -330,9 +334,13 @@ public class PublishToServerCommand {
    * @param fileName name of schema file on filesystem
    * @return Look up name from XML otherwise use file name
    */
-  private String determineDomainCatalogName(InputStream dataInputStream, String fileName) {
+  private String determineDomainCatalogName(InputStream dataInputStream, String fileName)
+    throws ParserConfigurationException {
     String domainId  = "";
     final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true);
+    factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+    factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 
     try {
       DocumentBuilder builder = factory.newDocumentBuilder();
