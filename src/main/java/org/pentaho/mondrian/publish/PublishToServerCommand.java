@@ -288,7 +288,7 @@ public class PublishToServerCommand {
           String jndiName,
           boolean enableXmla,
           boolean overwrite,
-          File schemaFile) throws PublishException, UnsupportedEncodingException, ParserConfigurationException {
+          File schemaFile) throws PublishException, ParserConfigurationException {
     try {
       InputStream inputStream = new FileInputStream(schemaFile);
 
