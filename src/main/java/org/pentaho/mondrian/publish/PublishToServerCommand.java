@@ -288,7 +288,7 @@ public class PublishToServerCommand {
           String jndiName,
           boolean enableXmla,
           boolean overwrite,
-          File schemaFile) throws PublishException, UnsupportedEncodingException {
+          File schemaFile) throws PublishException, UnsupportedEncodingException, ParserConfigurationException {
     try {
       InputStream inputStream = new FileInputStream(schemaFile);
 
@@ -324,7 +324,7 @@ public class PublishToServerCommand {
     } catch (FileNotFoundException e) {
       throw new PublishException("Unable to publish Mondrian Schema");
     } catch ( ParserConfigurationException e ) {
-      throw new RuntimeException( e );
+      throw new ParserConfigurationException( e.getMessage() );
     }
   }
 
