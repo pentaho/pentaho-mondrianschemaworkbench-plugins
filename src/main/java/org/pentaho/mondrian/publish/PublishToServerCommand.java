@@ -26,8 +26,10 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.swing.JOptionPane;
 import javax.ws.rs.core.MediaType;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -41,6 +43,7 @@ import org.pentaho.mondrian.publish.workbench.PublishUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * User: Martin Date: 25.01.2006 Time: 11:26:24
@@ -286,7 +289,7 @@ public class PublishToServerCommand {
           String jndiName,
           boolean enableXmla,
           boolean overwrite,
-          File schemaFile) throws PublishException, UnsupportedEncodingException {
+          File schemaFile) throws PublishException {
     try {
       InputStream inputStream = new FileInputStream(schemaFile);
 
@@ -330,23 +333,27 @@ public class PublishToServerCommand {
    * @param fileName name of schema file on filesystem
    * @return Look up name from XML otherwise use file name
    */
-  private String determineDomainCatalogName(InputStream dataInputStream, String fileName) {
-    String domainId  = "";
-    final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+  private String determineDomainCatalogName( InputStream dataInputStream, String fileName ) {
+    String domainId = "";
 
     try {
+      final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
+      factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_DTD, "" );
+      factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_SCHEMA, "" );
+
       DocumentBuilder builder = factory.newDocumentBuilder();
-      Document document = builder.parse(dataInputStream);
-      NodeList schemas = document.getElementsByTagName("Schema");
-      Node schema = schemas.item(0);
-      Node name = schema.getAttributes().getNamedItem("name");
+      Document document = builder.parse( dataInputStream );
+      NodeList schemas = document.getElementsByTagName( "Schema" );
+      Node schema = schemas.item( 0 );
+      Node name = schema.getAttributes().getNamedItem( "name" );
       domainId = name.getTextContent();
       dataInputStream.reset();
-    } catch (Exception e) {
-      LOG.fine("Problem occurred when trying to get schema name from document. Using filename instead.");
+    } catch ( IOException | ParserConfigurationException | SAXException e ) {
+      LOG.fine( "Problem occurred when trying to get schema name from document. Using filename instead." );
     }
 
-    if("".equals(domainId)){
+    if ( "".equals( domainId ) ) {
       domainId = fileName;
     }
 
