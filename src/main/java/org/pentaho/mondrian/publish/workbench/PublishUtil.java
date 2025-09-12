@@ -11,9 +11,11 @@
  ******************************************************************************/
 package org.pentaho.mondrian.publish.workbench;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.Response;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.WebTarget;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.logging.Logger;
@@ -88,22 +90,28 @@ public class PublishUtil {
       urlPart += "/";
     }
 
-    Client client = Client.create();
-    client.addFilter( new HTTPBasicAuthFilter(username, password) );
+    Client client = ClientBuilder.newClient();
+    HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(username, password);
+    client.register(feature);
 
     try{
 
       String url = urlPart.concat( RESERVED_CHARS_URL );
-      WebResource resource = client.resource(url);
-      setReservedChars( resource.get( String.class ) );
+      WebTarget resource = client.target(url);
+      Response response = resource.request().get();
+      setReservedChars( response.readEntity( String.class ) );
 
       url = urlPart.concat( RESERVED_CHARS_URL_DISPLAY );
-      resource = client.resource(url);
-      setReservedCharsDisplay( resource.get( String.class ) );
+      resource = client.target(url);
+      response = resource.request().get();
+      setReservedCharsDisplay( response.readEntity( String.class ) );
 
     }catch(Exception e){
       LOG.warning( "Reserved character call failed: " + e.getMessage());
       // ignored intentionally; will fall back to defaults
+    }
+    finally {
+      client.close();
     }
 
   }
