@@ -25,18 +25,20 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.swing.JOptionPane;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.MediaType;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataMultiPart;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.WebTarget;
+import jakarta.ws.rs.core.Response;
 
 import org.apache.commons.lang.StringUtils;
 import org.pentaho.mondrian.publish.workbench.PublishUtil;
@@ -290,6 +292,8 @@ public class PublishToServerCommand {
           boolean enableXmla,
           boolean overwrite,
           File schemaFile) throws PublishException {
+
+    Client client = null;
     try {
       InputStream inputStream = new FileInputStream(schemaFile);
 
@@ -313,17 +317,21 @@ public class PublishToServerCommand {
       part.getField("uploadAnalysis").setContentDisposition(FormDataContentDisposition.name("uploadAnalysis").fileName(schemaFile.getName()).build());
 
       // Credentials here
-      Client client = Client.create();
-      client.addFilter(new HTTPBasicAuthFilter(serverUserId, serverPassword));
+      client = ClientBuilder.newClient();
+      HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic(serverUserId, serverPassword);
+        client.register(feature);
 
       LOG.fine("PUBLISH URL PATH : " + publishURL);
 
-      WebResource resource = client.resource(publishURL);
-      ClientResponse response = resource.type(MediaType.MULTIPART_FORM_DATA_TYPE).put(ClientResponse.class, part);
+      WebTarget resource = client.target(publishURL);
+      Response response = resource.request().put( Entity.entity( part, MediaType.MULTIPART_FORM_DATA_TYPE ) );
 
       return response != null ? response.getStatus() : -1;
     } catch (FileNotFoundException e) {
       throw new PublishException("Unable to publish Mondrian Schema");
+    }
+    finally {
+        client.close();
     }
   }
 
