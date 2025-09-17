@@ -347,8 +347,7 @@ public class PublishToServerCommand {
     try {
       final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
-      factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_DTD, "" );
-      factory.setAttribute( XMLConstants.ACCESS_EXTERNAL_SCHEMA, "" );
+      factory.setFeature( "http://apache.org/xml/features/disallow-doctype-decl", true );
 
       DocumentBuilder builder = factory.newDocumentBuilder();
       Document document = builder.parse( dataInputStream );
