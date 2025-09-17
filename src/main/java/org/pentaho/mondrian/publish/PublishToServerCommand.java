@@ -62,6 +62,7 @@ public class PublishToServerCommand {
   private static final String PUBLISH_USER_PASSWORD = "pentahoUserPassword";
   private static final String PUBLISH_USER_PASSWORDS = "pentahoUserPasswords";
   private static final String PUBLISH_JNDI_NAME = "pentahoPublishJndiName";
+  private static final String PUBLISH_DSP_CLASS = "pentahoPublishDspClass";
   private static final String PUBLISH_ENABLE_XMLA = "pentahoPublishEnableXmla";
 
   private static final String DELIMITER = "\t";
@@ -157,13 +158,14 @@ public class PublishToServerCommand {
     if (StringUtils.isEmpty(jndiName)) {
       jndiName = "FoodMart";
     }
+    String dspClass = parent.getProperty(PUBLISH_DSP_CLASS);
 
     List<String> publishLocations = splitProperties(parent.getProperty(PUBLISH_WEB_LOCATIONS));
     List<String> publishUserIds = splitProperties(parent.getProperty(PUBLISH_USER_IDS));
     List<String> publishUserPasswords = splitProperties(decryptPassword(parent.getProperty(PUBLISH_USER_PASSWORDS)));
 
     final RepositoryLoginDialog loginDialog = new RepositoryLoginDialog(parent.getFrame(), publishURL, publishLocations,
-                                                                         publishUserIds, publishUserPasswords, jndiName, enableXmla);
+                                                                         publishUserIds, publishUserPasswords, jndiName, enableXmla, dspClass);
     loginDialog.setLocationRelativeTo(parent.getFrame());
     loginDialog.setVisible(true);
 
@@ -174,6 +176,7 @@ public class PublishToServerCommand {
       userPassword = loginDialog.getUserPassword();
       jndiName = loginDialog.getJndiDataSourceName();
       enableXmla = loginDialog.getEnableXmla();
+      dspClass = loginDialog.getDspClassName();
 
       if (loginDialog.getRememberSettings()) {
         parent.setProperty(PUBLISH_WEB_LOCATION, publishURL);
@@ -181,6 +184,7 @@ public class PublishToServerCommand {
         parent.setProperty(PUBLISH_USER_PASSWORD, encryptPassword(userPassword));
         parent.setProperty(PUBLISH_JNDI_NAME, jndiName);
         parent.setProperty(PUBLISH_ENABLE_XMLA, enableXmla ? "true" : "false");
+        parent.setProperty(PUBLISH_DSP_CLASS, dspClass);
 
         if (!publishLocations.contains(publishURL)) {
           publishLocations.add(publishURL);
@@ -222,7 +226,7 @@ public class PublishToServerCommand {
           publisherUrl += MONDRIAN_SCHEMA_IMPORT_URL;
 
           String message = "";
-          int statusCode = publish(publisherUrl, user, userPassword, jndiName, enableXmla, false, parent.getSchemaFile());
+          int statusCode = publish(publisherUrl, user, userPassword, jndiName, enableXmla, dspClass, false, parent.getSchemaFile());
           if ((statusCode == 1) || (statusCode == 2)) {
             message = Messages.getString("PublishToServerCommand.Failed");
           } else if (statusCode == 3) {
@@ -245,7 +249,7 @@ public class PublishToServerCommand {
             overwriteDialog.setVisible(true);
             boolean overwrite = overwriteDialog.isOkPressed();
             if (overwrite) {
-              statusCode = publish(publisherUrl, user, userPassword, jndiName, enableXmla, true, parent.getSchemaFile());
+              statusCode = publish(publisherUrl, user, userPassword, jndiName, enableXmla, dspClass, true, parent.getSchemaFile());
               if (statusCode == 3) {
                 message = Messages.getString("PublishToServerCommand.Successful");
               }
@@ -290,6 +294,7 @@ public class PublishToServerCommand {
           String serverPassword,
           String jndiName,
           boolean enableXmla,
+          String dspClass,
           boolean overwrite,
           File schemaFile) throws PublishException {
 
@@ -304,6 +309,13 @@ public class PublishToServerCommand {
       if ( ( !PublishUtil.validateName( catalogName ) ) || ( !PublishUtil.validateName( schemaFile.getName() ) ) ){
         return 99;
       }
+      
+      String parameters = "Datasource=" + jndiName;
+      
+      // Add Dynamic Schema Processor class if set
+      if(dspClass != null && dspClass.length() > 0) {
+    	  parameters+=";DynamicSchemaProcessor=" + dspClass;
+      }
 
       FormDataMultiPart part = new FormDataMultiPart()
               .field("uploadAnalysis", inputStream, MediaType.MULTIPART_FORM_DATA_TYPE)
@@ -311,7 +323,7 @@ public class PublishToServerCommand {
               .field("Datasource", jndiName, MediaType.MULTIPART_FORM_DATA_TYPE)              
               .field("overwrite", overwrite ? "true" : "false", MediaType.MULTIPART_FORM_DATA_TYPE)
               .field("xmlaEnabledFlag", enableXmla ? "true" : "false", MediaType.MULTIPART_FORM_DATA_TYPE)
-             .field("parameters", "Datasource=" + jndiName, MediaType.MULTIPART_FORM_DATA_TYPE);
+             .field("parameters",  parameters , MediaType.MULTIPART_FORM_DATA_TYPE);
 
       // If the import service needs the file name do the following.
       part.getField("uploadAnalysis").setContentDisposition(FormDataContentDisposition.name("uploadAnalysis").fileName(schemaFile.getName()).build());
