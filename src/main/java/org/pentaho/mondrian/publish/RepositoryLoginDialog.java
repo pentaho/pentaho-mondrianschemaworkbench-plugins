@@ -46,6 +46,7 @@ public class RepositoryLoginDialog extends JDialog {
   JTextField userField = new JTextField(25);
   JPasswordField userPasswordField = new JPasswordField();
   JTextField jndiDataSourceName = new JTextField("");
+  JTextField dynamicSchemaProcessorClass = new JTextField("");
   JCheckBox enableXmlaCheckBox = new JCheckBox(Messages.getString("PublishToServerCommand.XMLADataSourceLabel")); //$NON-NLS-1$
   JCheckBox rememberSettings = new JCheckBox("Remember these Settings", true);
 
@@ -77,17 +78,17 @@ public class RepositoryLoginDialog extends JDialog {
     }
   };
 
-  public RepositoryLoginDialog(Frame parent, String serverURL, List<String> publishLocations, List<String> publishUserIds, List<String> publishUserPasswords,  String jndiName, boolean enableXmla) {
+  public RepositoryLoginDialog(Frame parent, String serverURL, List<String> publishLocations, List<String> publishUserIds, List<String> publishUserPasswords,  String jndiName, boolean enableXmla, String dspClass) {
     super(parent, "Publish Schema");
-    init(serverURL, publishLocations, publishUserIds, publishUserPasswords, jndiName, enableXmla);
+    init(serverURL, publishLocations, publishUserIds, publishUserPasswords, jndiName, enableXmla, dspClass);
   }
 
-  public RepositoryLoginDialog(Dialog parent, String serverURL, List<String> publishLocations, List<String> publishUserIds, List<String> publishUserPasswords,  String jndiName, boolean enableXmla) {
+  public RepositoryLoginDialog(Dialog parent, String serverURL, List<String> publishLocations, List<String> publishUserIds, List<String> publishUserPasswords,  String jndiName, boolean enableXmla, String dspClass) {
     super(parent, "Publish Schema");
-    init(serverURL, publishLocations, publishUserIds, publishUserPasswords, jndiName, enableXmla);
+    init(serverURL, publishLocations, publishUserIds, publishUserPasswords, jndiName, enableXmla, dspClass);
   }
 
-  private void init(String serverURL, List<String> publishLocations, List<String> publishUserIds, List<String> publishUserPasswords, String jndiName, boolean enableXmla) {
+  private void init(String serverURL, List<String> publishLocations, List<String> publishUserIds, List<String> publishUserPasswords, String jndiName, boolean enableXmla, String dspClass) {
     this.serverURL = serverURL;
     this.publishLocations = publishLocations;
     this.publishUserIds = publishUserIds;
@@ -105,7 +106,7 @@ public class RepositoryLoginDialog extends JDialog {
 
     c.gridy = 1;
     c.insets = new Insets(0, 10, 5, 10);
-    getContentPane().add(buildPublishSettingsPanel(jndiName, enableXmla), c);
+    getContentPane().add(buildPublishSettingsPanel(jndiName, enableXmla, dspClass), c);
     c.gridy = 2;
 
     getContentPane().add(rememberSettings, c);
@@ -229,7 +230,7 @@ public class RepositoryLoginDialog extends JDialog {
     return userPanel;
   }
 
-  private JPanel buildPublishSettingsPanel(String jndiName, boolean enableXmla) {
+  private JPanel buildPublishSettingsPanel(String jndiName, boolean enableXmla, String dspClass) {
     JPanel publishSettingsPanel = new JPanel(new GridBagLayout());
     publishSettingsPanel.setBorder(BorderFactory.createTitledBorder(Messages.getString("PublishToServerCommand.PublishSettingsTitle"))); //$NON-NLS-1$
     GridBagConstraints c = new GridBagConstraints();
@@ -251,21 +252,41 @@ public class RepositoryLoginDialog extends JDialog {
     c.weightx = 1.0;
     jndiDataSourceName.setText(jndiName);
     publishSettingsPanel.add(jndiDataSourceName, c);
+    
+    c.insets = new Insets(5, 5, 0, 5);
+    c.gridwidth = 2;
+    c.gridx = 0;
+    c.gridy = 2;
+    c.fill = GridBagConstraints.HORIZONTAL;
+    c.anchor = GridBagConstraints.WEST;
+    publishSettingsPanel.add(new JLabel("Dynamic Schema Processor"), c); 
 
+    
+    c.insets = new Insets(5, 5, 5, 0);
+    c.gridwidth = 1;
+    c.gridx = 0;
+    c.gridy = 3;
+    c.fill = GridBagConstraints.HORIZONTAL;
+    c.anchor = GridBagConstraints.WEST;
+    c.weightx = 1.0;
+    dynamicSchemaProcessorClass.setText(dspClass);
+    publishSettingsPanel.add(dynamicSchemaProcessorClass, c);
+    
+    
     enableXmlaCheckBox.setSelected(enableXmla);
     c.gridwidth = 2;
     c.insets = new Insets(5, 5, 5, 5);
     c.fill = GridBagConstraints.HORIZONTAL;
     c.anchor = GridBagConstraints.WEST;
     c.gridx = 0;
-    c.gridy = 2;
+    c.gridy = 4;
     c.weightx = 1.0;
     publishSettingsPanel.add(enableXmlaCheckBox, c);
 
     c.weightx = 0.0;
     c.insets = new Insets(5, 5, 5, 5);
     c.gridx = 0;
-    c.gridy = 3;
+    c.gridy = 5;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.anchor = GridBagConstraints.WEST;
     getContentPane().add(publishSettingsPanel, c);
@@ -304,4 +325,8 @@ public class RepositoryLoginDialog extends JDialog {
   public boolean getEnableXmla() {
     return enableXmlaCheckBox.isSelected();
   }
+  
+  public String getDspClassName() {
+	    return dynamicSchemaProcessorClass.getText();
+	  }
 }
