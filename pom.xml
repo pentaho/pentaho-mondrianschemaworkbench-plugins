@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.pentaho</groupId>
     <artifactId>pentaho-ce-jar-parent-pom</artifactId>
-    <version>11.1.0.0-SNAPSHOT</version>
+    <version>11.1.0.0-343</version>
   </parent>
 
   <artifactId>mondrian-schemaworkbench-plugins</artifactId>
@@ -37,7 +37,7 @@
 
   <properties>
     
-    <mondrian.version>11.1.0.0-SNAPSHOT</mondrian.version>
+    <mondrian.version>11.1.0.0-343</mondrian.version>
     <!-- external -->
     <commons-lang.version>2.3</commons-lang.version>
     <junit.version>4.4</junit.version>
