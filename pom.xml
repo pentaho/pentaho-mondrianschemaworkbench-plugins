@@ -38,8 +38,6 @@
   <properties>
     
     <mondrian.version>11.1.0.0-SNAPSHOT</mondrian.version>
-    <!-- external -->
-    <commons-lang.version>2.3</commons-lang.version>
     <junit.version>4.4</junit.version>
   </properties>
   
@@ -56,9 +54,9 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>${commons-lang.version}</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
       <exclusions>
         <exclusion>
           <groupId>*</groupId>
