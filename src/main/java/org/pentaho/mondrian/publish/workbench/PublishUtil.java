@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.WebTarget;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
